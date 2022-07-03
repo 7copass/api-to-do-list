@@ -1,4 +1,7 @@
-const ToDoList = [
+const Tasks = require('../models/tasks');
+
+
+/* const ToDoList = [
   {
     id: 1,
     nome: 'Estudar React',
@@ -20,34 +23,30 @@ const ToDoList = [
     prioridade: 'Média',
   },
 ];
-
-const FindAllTaskService = () => {
-  return ToDoList;
+ */
+const FindAllTaskService = async () => {
+  const allTasks = await Tasks.find();
+  return allTasks;
 };
 
-const FindByIdTaskService = (id) => {
-  return ToDoList.find((task) => task.id == id);
+const FindByIdTaskService = async (id) => {
+  const oneTask = await Tasks.findById(id)
+  return oneTask;
 };
 
-const createTaskService = (newTask) => {
-  const newId = ToDoList.length + 1;
-  newTask.id = newId;
-  ToDoList.push(newTask);
-  return newTask;
+const createTaskService = async (newTask) => {
+  const createdTask = await Tasks.create(newTask);
+  return createdTask;
 };
 
-const updateTaskService = (id, taskedited) => {
-  taskedited['id'] = id;
-  const taskIndex = ToDoList.findIndex((task) => task.id == id);
-  ToDoList[taskIndex] = taskedited;
-  return taskedited;
+const updateTaskService = async (id, taskedited) => {
+  const updateTask = await Tasks.findByIdAndUpdate(id, taskedited)
+  return updateTask
 };
 
-const deleteTaskService = (id) => {
-  const taskIndex = ToDoList.find((task) => task.id == id);
-  return ToDoList.splice(taskIndex, 1);
-};
-
+const deleteTaskService = async (id) => {
+  return await Tasks.findByIdAndDelete(id)
+}
 module.exports = {
   FindAllTaskService,
   FindByIdTaskService,

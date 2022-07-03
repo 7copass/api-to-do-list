@@ -1,0 +1,22 @@
+ [
+    {
+      
+      "nome": "Estudar React",
+      "prioridade": "Média"
+    },
+    {
+      
+      "nome": "Fazer Projetos Blue",
+      "prioridade": "Alta"
+    },
+    {
+      
+      "nome": "Terminar módulos Bootcamp DIO ",
+      "prioridade": "Baixa"
+    },
+    {
+      
+      "nome": "Fazer Projetos pessoais",
+      "prioridade": "Média"
+    }
+  ]

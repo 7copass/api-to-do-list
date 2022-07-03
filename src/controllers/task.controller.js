@@ -1,32 +1,46 @@
 const taskService = require('../services/task.service');
 
-const FindAllTaskController = (req, res) => {
-  const ToDoList = taskService.FindAllTaskService();
+const FindAllTaskController = async (req, res) => {
+  const ToDoList = await taskService.FindAllTaskService();
+  if (ToDoList.length == 0) {
+    return res
+      .status(404)
+      .send({ message: 'Não existe nenhuma paleta cadastrada ' });
+  }  
   res.send(ToDoList);
 };
 
-const FindByIdTaskController = (req, res) => {
-  const idParametro = req.params.id;
-  const escolhaTask = taskService.FindByIdTaskService(idParametro);
-  res.send(escolhaTask);
+const FindByIdTaskController = async (req, res) => {
+  const idParam = req.params.id;
+  
+  const chosenTask = await taskService.FindByIdTaskService(idParam);
+  if (!chosenTask) {
+    return res.status(400).send({ message: 'Task não existe' });
+  } 
+  res.send(chosenTask);
 };
 
-const createTaskController = (req, res) => {
+const createTaskController = async (req, res) => {
   const Task = req.body;
-  const newTask = taskService.createTaskService(Task);
-  res.send(newTask);
+  
+  const newTask = await taskService.createTaskService(Task);
+  res.status(201).send(newTask);
 };
 
-const updateTaskController = (req, res) => {
-  const idparam = +req.params.id;
+const updateTaskController = async (req, res) => {
+  const idparam = req.params.id;
   const taskedit = req.body;
-  const updateTask = taskService.updateTaskService(idparam, taskedit);
+  const updateTask = await taskService.updateTaskService(idparam, taskedit);
   res.send(updateTask);
 };
 
-const deleteTaskController = (req, res) => {
+const deleteTaskController = async (req, res) => {
   const idParam = req.params.id;
-  taskService.deleteTaskService(idParam);
+  const chosenTask = await taskService.deleteTaskService(idParam);
+
+  if (!chosenTask) {
+    return res.status(400).send({ message: 'Task não Encontrada' });
+  }
   res.send({ message: 'Task deleta com Sucesso' });
 };
 

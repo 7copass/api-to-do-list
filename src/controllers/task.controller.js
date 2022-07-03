@@ -6,23 +6,23 @@ const FindAllTaskController = async (req, res) => {
     return res
       .status(404)
       .send({ message: 'Não existe nenhuma paleta cadastrada ' });
-  }  
+  }
   res.send(ToDoList);
 };
 
 const FindByIdTaskController = async (req, res) => {
   const idParam = req.params.id;
-  
+
   const chosenTask = await taskService.FindByIdTaskService(idParam);
   if (!chosenTask) {
     return res.status(400).send({ message: 'Task não existe' });
-  } 
+  }
   res.send(chosenTask);
 };
 
 const createTaskController = async (req, res) => {
   const Task = req.body;
-  
+
   const newTask = await taskService.createTaskService(Task);
   res.status(201).send(newTask);
 };

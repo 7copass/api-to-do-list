@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Characters = require('../models/character');
 
 const validId = (req, res, next) => {
   const idParam = req.params.id;
@@ -9,20 +10,17 @@ const validId = (req, res, next) => {
 };
 
 const validObjectBody = (req, res, next) => {
-  const task = req.body;
+  const character = req.body;
 
-  if (
-    !task ||
-    !task.nome ||
-    !task.prioridade
-
-  ) {
-    return res.status(400).send({ message: 'Envie Todos os campos da task' });
+  if (!character || !character.name || !character.imageUrl) {
+    return res
+      .status(400)
+      .send({ message: 'Envie Todos os campos do personagem' });
   }
   next();
 };
 
 module.exports = {
   validId,
-  validObjectBody,
+  validObjectBody  
 };
